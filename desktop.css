@@ -1,0 +1,687 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+* {
+    font-family: "Sora";
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 150%;
+    background-color: #05062B;
+}
+
+.container {
+    margin-top: 20px;
+    padding-top: 10px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: black;
+
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 170vh;
+    background-color: black;
+}
+
+/* Estilo para a navbar */
+.navbar {
+    background-color: black;
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    margin-top: 30rem;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    float: center;
+
+}
+
+.logo {
+    margin: 0 auto;
+    width: 101px;
+    height: auto;
+    position: relative;
+}
+
+.texto2 {
+    width: 188px;
+    height: 112px;
+    gap: 0px;
+    opacity: 0px;
+    margin-top: 16px;
+
+}
+
+.hide {
+    display: none;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.skills-wheel {
+    height: 900px;
+    width: 1190px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5%;
+    margin-bottom: 30px;
+    border: 60px solid black;
+    background: url('./img/wheel.png') center/cover no-repeat, black;
+    background-clip: border-box;
+}
+
+.images{
+width: 12%;
+}
+
+.skills-wheel::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -60px;
+    right: -60px;
+    bottom: -60px;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+.skills-wheel .btn {
+    background-color: #F8E100;
+    color: black;
+    -webkit-box-shadow: inset 0 -8px 0 #EE9D1E;
+    -moz-box-shadow: inset 0 -8px 0 #FDFF00;
+    box-shadow: inset 0 -8px 0 #EEA11D;
+    height: 100px;
+    left: 50%;
+    line-height: 90px;
+    margin: -54px 0 0 -54px;
+    padding: 0;
+    position: absolute;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    top: 50%;
+    width: 100px;
+    font-family: Sora;
+    font-size: 22.28px;
+    font-weight: 700;
+    box-shadow: 0px 0px 20px rgba(46, 95, 148, 0.4), 0 6px 20px rgba(46, 95, 148, 0.3);
+}
+
+.skills-wheel .btn:hover {
+    background-color: #F8E100;
+    color: black;
+}
+
+.skills-wheel .btn:active {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    height: 96px;
+    margin-top: -50px;
+}
+
+.skills-wheel .btn.disabled {
+    background-color: #474747;
+    border-color: #aaa;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.skills-wheel .btn.disabled:active {
+    height: 100px;
+    margin-top: -54px;
+}
+
+.wheel {
+    border: 60px solid black;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    text-align: center;
+    width: 100%;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    z-index: 0;
+}
+
+.wheel li {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    height: 102%;
+    left: 50%;
+    margin-left: -50%;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.wheel li a {
+    color: #fff;
+    display: block;
+    font-family: "avantgarde_bold", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1.4em;
+    text-decoration: none;
+}
+
+.wheel li:nth-child(1) {
+    transform: rotate(0deg);
+}
+
+.wheel li:nth-child(2) {
+    transform: rotate(36deg);
+}
+
+.wheel li:nth-child(3) {
+    transform: rotate(72deg);
+}
+
+.wheel li:nth-child(4) {
+    transform: rotate(108deg);
+}
+
+.wheel li:nth-child(5) {
+    transform: rotate(144deg);
+}
+
+.wheel li:nth-child(6) {
+    transform: rotate(180deg);
+}
+
+.wheel li:nth-child(7) {
+    transform: rotate(216deg);
+}
+
+.wheel li:nth-child(8) {
+    transform: rotate(252deg);
+}
+
+.wheel li:nth-child(9) {
+    transform: rotate(288deg);
+}
+
+.wheel li:nth-child(10) {
+    transform: rotate(324deg);
+}
+
+.wheel li i {
+    display: block;
+    margin: 0 auto;
+    font-size: 28px;
+    padding: 10px 0;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .skills-wheel {
+        height: 500px;
+        width: 500px;
+        position: relative;
+        margin-left: 30%;
+    }
+
+    .skills-wheel .btn {
+        height: 100px;
+        width: 100px;
+        line-height: 100px;
+        font-size: 16px;
+        margin: -45px 0 0 -45px;
+        margin-left: 0;
+    }
+
+    .wheel li a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .skills-wheel {
+        height: 350px;
+        width: 350px;
+    }
+
+    .skills-wheel .btn {
+        height: 70px;
+        width: 70px;
+        line-height: 70px;
+        font-size: 14px;
+        margin: -35px 0 0 -35px;
+    }
+
+    .wheel li a {
+        font-size: 12px;
+    }
+}
+
+
+
+@media (max-width: 480px) {
+
+    .skills-wheel {
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+        height: 390px;
+        overflow: hidden;
+        position: relative;
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        width: 390px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        right: 20%;
+    }
+
+    .skills-wheel .btn:active {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        height: 96px;
+        margin-top: -50px;
+    }
+
+    .skills-wheel .btn.disabled {
+        background-color: #474747;
+        border-color: #aaa;
+        color: #ccc;
+        cursor: not-allowed;
+    }
+
+    .skills-wheel .btn.disabled:active {
+        height: 50px;
+        margin-top: -54px;
+    }
+
+
+    .skills-wheel .btn {
+        height: 60px;
+        width: 60px;
+        line-height: 60px;
+        font-size: 14px;
+        margin: -25px 0 0 -25px;
+    }
+
+    .skills-wheel .btn i {
+        height: auto;
+        width: auto;
+        line-height: 60px;
+        font-size: 30px;
+        position: relative;
+        bottom: 5px;
+    }
+
+    .skills-wheel .btn::before {
+        width: 10%;
+        height: 10%;
+    }
+
+    .wheel li i {
+        font-size: 25px;
+    }
+
+    .wheel li a {
+        font-size: 5px;
+    }
+
+}
+
+.arrow {
+    font-size: 50px;
+}
+
+
+footer {
+    background-color: black;
+    color: #fff;
+    padding: 20px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border-top: #474747 solid 1px;
+    background-image: url(./img/bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50%;
+}
+
+.footer-content {
+    max-width: 200px;
+    margin: 0 auto;
+    display: flex;
+    position: relative;
+    width: 300px;
+    justify-content: space-between;
+    gap: 200px;
+    /* Aplica um espaço entre as divs */
+    height: 20vh;
+    text-align: left;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.conteudo a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: 2s;
+
+}
+
+footer a:hover {
+    text-decoration: underline;
+    transform: scale(1.1);
+}
+
+/* Ajuste para dispositivos móveis */
+@media (max-width: 768px) {
+    footer p {
+        font-size: 12px;
+    }
+
+    footer a {
+        margin: 0 5px;
+    }
+
+    footer {
+        height: 125%;
+    }
+}
+
+.icons {
+    font-size: 30px;
+    transition: 2s;
+    color: black;
+    text-decoration: none;
+}
+
+.icons:hover {
+    transform: scale(1.1);
+    color: black;
+    text-decoration: none;
+
+}
+
+.conteudos {
+    display: flex;
+    gap: 20px;
+    height: 30vh;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.ajuda,
+.sobre,
+.licence,
+.pagamento {
+    width: calc(30% - 20px);
+    background-color: black;
+}
+
+.ajuda,
+.sobre,
+.licence,
+.pagamento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagamento {
+    border-left: #474747 1px solid;
+    height: 20rem;
+    left: 10px;
+    position: relative;
+}
+
+.ajuda h3,
+.sobre h3,
+.licence h3,
+.pagamento h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 800;
+    text-align: left;
+}
+
+.ajuda a,
+.sobre a,
+.licence a,
+.pagamento a {
+    color: #FFf;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 5px 0;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.pagamento img {
+    width: 50%;
+    height: auto;
+}
+
+.marca {
+    width: 20%;
+}
+
+.patrocinadores {
+    width: 40%;
+}
+
+.licence p {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.licence h4 {
+    font-size: 12px;
+    margin-top: 20px;
+    font-weight: 400;
+    color: #9b9b9b;
+}
+
+.licence h2 {
+    font-size: 10px;
+    left: 20px;
+    position: relative;
+}
+
+
+.ajuda a:hover,
+.sobre a:hover,
+.licence a:hover,
+.pagamento a:hover {
+    color: #007bff;
+    transform: scale(1.05);
+    text-decoration: none;
+    color: #ccc;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    .footer-content {
+        max-width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .conteudos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ajuda,
+    .sobre,
+    .licence,
+    .pagamento {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        justify-content: space-between;
+    }
+
+    .sobre,
+    .licence,
+    .pagamento {
+        margin-top: 20px;
+    }
+
+
+    footer p {
+        font-size: 12px;
+    }
+
+    footer a {
+        margin: 0 5px;
+    }
+
+    .marca,
+    .patrocinadores {
+        width: 30%;
+    }
+
+    .marca {
+        width: 15%;
+    }
+
+    .pagamento {
+        border: none;
+    }
+
+    .pagamento img {
+        width: 30%;
+    }
+
+    .licence p,
+    .licence h4 {
+        text-align: center;
+    }
+
+    .licence h2 {
+        left: 0;
+    }
+
+}
+
+.patrocinadores,
+.pixs,
+.marca {
+    transition: 1s;
+}
+
+.patrocinadores:hover,
+.pixs:hover,
+.marca:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+
+    /* Estilo para a navbar */
+    .navbar {
+        background-color: black;
+        padding: 10px 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 0;
+
+    }
+
+    /* Container para centralizar o conteúdo da navbar */
+    .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 60%;
+        margin: 0 auto;
+
+    }
+
+    /* Estilo para as imagens da navbar */
+    .navbar-logo img {
+        width: 60%;
+
+    }
+
+    /* Opcional: Estilo para links se você adicionar mais elementos */
+    .navbar a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 16px;
+    }
+
+
+}
+
+.titulo {
+    text-align: center;
+    color: black;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: "Sora";
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .titulo {
+        margin: 0;
+        margin-bottom: 20px;
+    }
+}
