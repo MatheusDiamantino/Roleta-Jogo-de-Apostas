@@ -26,13 +26,8 @@ body {
 body {
     display: flex;
     flex-direction: column;
-    /* Adiciona esta linha para empurrar o footer para o final da página */
     justify-content: center;
     align-items: center;
-    background-image: url(./img/bg-.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     height: 170vh;
     background-color: black;
 }
