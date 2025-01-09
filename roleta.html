@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roleta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
+    <style>
+        body,
+        html {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Estilo básico do body */
+        body {
+            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Criando as luzes caindo */
+        .light {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: fallLights 3s infinite linear;
+            animation-delay: 4s;
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.4), 0 0 20px 10px rgba(255, 255, 255, 0.6);
+            z-index: -0.5;
+        }
+
+        .light:nth-child(odd) {
+            animation-duration: 2s;
+            animation-delay: 1s;
+        }
+
+        .light:nth-child(even) {
+            animation-duration: 2.5s;
+            animation-delay: 1s;
+        }
+
+        @keyframes fallLights {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Container principal */
+        #container-geral {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-image: linear-gradient(to bottom, #45296d, #382359, #2b1d45, #201732, #160f20);
+            overflow: hidden;
+        }
+
+        /* Raios de luz ao redor do container */
+        #container-geral::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow:
+                0 0 100px 10px rgba(255, 255, 255, 0.3),
+                0 0 150px 20px rgba(255, 255, 255, 0.2),
+                0 0 200px 30px rgba(255, 255, 255, 0.1),
+                0 0 250px 40px rgba(255, 255, 255, 0.05);
+            animation: pulseRays 4s infinite ease-in-out;
+        }
+
+        @keyframes pulseRays {
+            0% {
+                box-shadow:
+                    0 0 100px 10px rgba(255, 255, 255, 0.3),
+                    0 0 150px 20px rgba(255, 255, 255, 0.2),
+                    0 0 200px 30px rgba(255, 255, 255, 0.1),
+                    0 0 250px 40px rgba(255, 255, 255, 0.05);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 150px 20px rgba(255, 255, 255, 0.5),
+                    0 0 200px 30px rgba(255, 255, 255, 0.4),
+                    0 0 250px 40px rgba(255, 255, 255, 0.3),
+                    0 0 300px 50px rgba(255, 255, 255, 0.2);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 100px 10px rgba(255, 255, 255, 0.3),
+                    0 0 150px 20px rgba(255, 255, 255, 0.2),
+                    0 0 200px 30px rgba(255, 255, 255, 0.1),
+                    0 0 250px 40px rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Estilo da roleta */
+        .wheel-container {
+            width: 500px;
+            height: 500px;
+            position: relative;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 5px solid #160F20;
+            box-shadow: 0 0 0 0px #45296d,
+                0 0 30px 0px #382359,
+                0 0 30px 15px #2b1d45,
+                0 0 0 30px #201732,
+                0 0 0 35px #160f20;
+            overflow: hidden;
+        }
+
+        /* Ponteiro da roleta */
+        .pointer {
+            position: absolute;
+            top: 50%;
+            right: -36px;
+            width: 60px;
+            height: 30px;
+            background-color: #241736;
+            background-image: linear-gradient(to bottom, #45296d, #382359, #2b1d45, #201732, #160f20);
+            clip-path: polygon(0 50%, 80% 0, 100% 50%, 80% 100%, 0 50%);
+            transform: translate(-50%, -50%) rotate(0deg);
+            z-index: 999;
+            transition: transform 0.3s ease-in-out;
+            border: 2px solid #18162b;
+        }
+
+        @keyframes abaixarSubir {
+            0% {
+                transform: translate(-50%, -50%) rotate(-15deg);
+            }
+
+            25% {
+                transform: translate(-50%, -45%) rotate(-10deg);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            75% {
+                transform: translate(-50%, -55%) rotate(10deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(-15deg);
+            }
+        }
+
+        .abaixar {
+            animation: abaixarSubir 1s ease-in-out;
+        }
+
+        /* Botão de spin */
+        button.btn-spin {
+            font-family: "Paytone One", sans-serif;
+            color: #000;
+            position: absolute;
+            bottom: calc(50% + -33px);
+            background-color: #fff;
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            border: 3px solid #00feac;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 400;
+            box-shadow: 0 3px 2px 1px #160605,
+                0 0 15px #fff,
+                0 0 30px #fff,
+                0 0 45px #fff;
+            animation: scaleUpDown 2s infinite ease-in-out;
+        }
+
+        @keyframes scaleUpDown {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        button.btn-spin:active:enabled {
+            transform: translateY(1px);
+            box-shadow: 0 0 18px 7px #e9e9d9, 0px 2px 0px #711d19;
+            border: 3px solid #faeec4;
+        }
+
+        button.btn-spin:hover:enabled {
+            color: #000000;
+            background-color: #f5f5e5;
+            cursor: pointer;
+            box-shadow: 0 0 9px 2px #fffff1;
+            border: 3px solid #fffff1;
+        }
+
+        button.btn-spin:disabled {
+            color: #6e6e6e;
+        }
+
+        /* Ajuste para dispositivos móveis */
+        @media only screen and (max-width: 768px) {
+            .wheel-container {
+                width: 320px;
+                height: 207px;
+            }
+
+            .pointer {
+                right: -24px;
+                width: 40px;
+                height: 20px;
+            }
+
+            button.btn-spin {
+                width: 40px;
+                height: 40px;
+                font-size: 8px;
+                bottom: calc(50% - 25px);
+            }
+
+
+
+            .wheel-container {
+                position: relative;
+            }
+
+            #container-geral::before {
+                width: 278px;
+                height: 276px;
+            }
+        }
+
+        /* Configuração da roleta */
+        #wheel-container {
+            width: 500px;
+            height: 500px;
+            position: relative;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 0 0 0px #45296d, 0 0 30px 0px #382359, 0 0 30px 15px #2b1d45, 0 0 0 30px #201732, 0 0 0 35px #160f20;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Tela maior (desktops grandes) */
+        @media only screen and (min-width: 1200px) {
+            .wheel-container {
+                width: 500px;
+                height: 500px;
+            }
+
+            .pointer {
+                width: 60px;
+                height: 30px;
+            }
+
+            button.btn-spin {
+                width: 66px;
+                height: 66px;
+                font-size: 16px;
+            }
+        }
+
+        /* Tela média (tablets, notebooks) */
+        @media only screen and (max-width: 1199px) and (min-width: 768px) {
+            .wheel-container {
+                width: 400px;
+                height: 400px;
+            }
+
+            .pointer {
+                width: 50px;
+                height: 25px;
+            }
+
+            button.btn-spin {
+                width: 55px;
+                height: 55px;
+                font-size: 12px;
+            }
+
+            #lights {
+                display: none;
+
+            }
+
+            #lights .lights {
+                display: none;
+
+            }
+
+            #lights .lights.lit {
+                box-shadow: 0 0 15px 9px #feffd2;
+            }
+        }
+
+        /* Tela pequena (smartphones) */
+        @media only screen and (max-width: 767px) {
+            .wheel-container {
+                width: 70vw;
+                height: 70vw;
+                max-width: 320px;
+                max-height: 320px;
+            }
+
+            .pointer {
+                width: 10vw;
+                height: 5vw;
+            }
+
+            button.btn-spin {
+                width: 12vw;
+                height: 12vw;
+                font-size: 9px;
+            }
+
+            #lights {
+                display: none;
+
+            }
+
+            #lights .lights {
+                display: none;
+
+
+            }
+
+            #lights .lights.lit {
+                box-shadow: 0 0 15px 9px #feffd2;
+            }
+        }
+
+        #lights {
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #lights .lights {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: #fffbf0;
+            top: calc(50% - 8px);
+            transform-origin: -260px;
+            position: absolute;
+            left: 280px;
+            transition: 1s;
+
+        }
+
+        #lights .lights.lit {
+            box-shadow: 0 0 15px 9px #feffd2;
+        }
+    </style>
+
+</head>
+
+<body style="background-color: transparent;">
+    <div id="container-geral" class="containger-geral">
+        <div class="wheel-container">
+            <canvas id="wheelCanvas" width="500" height="500"></canvas>
+            <div class="pointer" id="pointer"></div>
+        </div>
+        <button class="btn-spin">GIRAR</button>
+        <div id="lights">
+            <div class="lights" style="transform: translateX(230px) rotate(286deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(313.5deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(344.5deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(14deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(46deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(73.5deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(103.5deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(134.5deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(163.3deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(192.6deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(223deg);"></div>
+            <div class="lights" style="transform: translateX(230px) rotate(253.5deg);"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/spin-wheel@4.3.1/dist/spin-wheel-iife.js"></script>
+    <script type="module" src="https://crazytim.github.io/spin-wheel/scripts/easing.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const props = {
+                radius: 0.88, // Raio da roleta
+                images: [
+                    'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/real.webp', 'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/realp.png', 'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/real.webp',
+                    'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/realp.png', 'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/real.webp', 'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/realp.png',
+                    'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/real.webp', 'https://marketing-assets-images.s3.sa-east-1.amazonaws.com/realp.png'
+                ],
+            };
+
+            const canvas = document.getElementById("wheelCanvas");
+            const ctx = canvas.getContext("2d");
+
+            let currentAngle = 0;
+            let isSpinning = false;
+            const images = [];
+
+            // Função para carregar uma imagem como objeto Image
+            function loadImage(url) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.src = url;
+                    img.onload = () => resolve(img);
+                    img.onerror = (err) => reject(`Erro ao carregar a imagem: ${url} - ${err}`);
+                });
+            }
+
+            // Carregar todas as imagens antes de desenhar a roleta
+            Promise.all(props.images.map(loadImage))
+                .then((loadedImages) => {
+                    images.push(...loadedImages);
+                    drawWheel(); // Chama a função para desenhar a roleta após todas as imagens serem carregadas
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+
+            function drawWheel(angleOffset = 0) {
+                const radius = canvas.width / 2;
+                const sliceAngle = Math.PI * 2 / props.images.length;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(radius, radius);
+
+                // Desenho dos segmentos
+                props.images.forEach((image, index) => {
+                    const angle = sliceAngle * index + angleOffset;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.arc(0, 0, radius, angle, angle + sliceAngle);
+                    ctx.fillStyle = index % 2 === 0 ? "#000" : "#fff";
+                    ctx.fill();
+
+                    // Adicionando borda vermelha ao segmento
+                    ctx.lineWidth = 2; // Largura da linha da borda
+                    ctx.stroke(); // Aplica a borda ao segmento
+                });
+
+                // Desenho das imagens sobre os segmentos
+                props.images.forEach((image, index) => {
+                    const angle = sliceAngle * index + angleOffset;
+                    const img = images[index];
+                    if (img) {
+                        ctx.save();
+                        ctx.rotate(angle + sliceAngle / 2);
+                        let imgSize = image.includes('real.webp') ? 60 : 80;
+                        const imgOffset = -radius * 0.5;
+                        ctx.drawImage(img, -imgSize / 2, imgOffset - imgSize / 2, imgSize, imgSize);
+                        ctx.restore();
+                    }
+                });
+
+                ctx.resetTransform();
+            }
+
+            function spinWheel() {
+                if (isSpinning) return;
+                isSpinning = true;
+
+                const spinDuration = 100000;  // Tempo de rotação aumentado para desacelerar mais
+                const spinSpeed = Math.PI * 6; // A velocidade de rotação, ainda boa para o efeito
+                const targetAngle = currentAngle + spinSpeed + Math.random() * Math.PI * 2;
+
+                let startTime = null;
+
+                function animateSpin(time) {
+                    if (!startTime) startTime = time;
+                    const elapsedTime = time - startTime;
+                    const progress = Math.min(elapsedTime / spinDuration, 1); // Garantir que não ultrapasse 1 (100%)
+
+                    // Aplicando uma aceleração/desaceleração suave com easeOutQuad
+                    const easedProgress = easeOutQuad(progress);
+
+                    // Atualizando o ângulo de rotação com a progressão suavizada
+                    currentAngle = currentAngle + easedProgress * (targetAngle - currentAngle);
+
+                    drawWheel(currentAngle); // Desenha a roleta com o novo ângulo
+                    checkPointerPosition(currentAngle); // Verificar posição do ponteiro
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateSpin);
+                    } else {
+                        currentAngle = targetAngle; // Garantir que o ângulo final seja exatamente o esperado
+                        drawWheel(currentAngle);
+                        checkPointerPosition(currentAngle); // Atualiza a posição do ponteiro
+                        isSpinning = false;
+                        $('.btn-spin').prop('disabled', false);
+                    }
+                }
+
+                // Função de desaceleração suave
+                function easeOutQuad(t) {
+                    return t * (2 - t); // Efeito de desaceleração suave
+                }
+
+                requestAnimationFrame(animateSpin);
+            }
+
+
+
+
+            // Função para verificar se o ponteiro passou por um segmento
+            function checkPointerPosition(angle) {
+                const pointer = document.getElementById("pointer");
+                const radius = canvas.width / 2; // Raio da roleta
+                const sliceAngle = Math.PI * 2 / props.images.length; // Ângulo de cada segmento
+
+                // Calculando o ângulo do ponteiro baseado no ângulo total da roleta
+                const pointerAngle = (angle % (Math.PI * 2)); // Isso garante que o ponteiro está dentro do intervalo [0, 2π]
+
+                // Determinando o índice do segmento com base no ângulo do ponteiro
+                const segmentIndex = Math.floor(pointerAngle / sliceAngle); // Divide o ângulo total do ponteiro pelo ângulo de cada segmento
+
+                // Verificar se o ponteiro passou por uma borda de segmento
+                // As bordas ocorrem entre o final de um segmento e o início do próximo
+                const isNearBorder = Math.abs(pointerAngle % sliceAngle) < 0.05 || Math.abs((pointerAngle + sliceAngle) % sliceAngle) < 0.05;
+
+                if (isNearBorder) {
+                    if (!pointer.classList.contains("abaixar")) { // Verifica se a classe já foi adicionada
+                        console.log(`Ponteiro passou por uma borda do segmento ${segmentIndex + 1}`);
+                        pointer.classList.add("abaixar");
+
+                        // Remove a classe "abaixar" após 2 segundos
+                        setTimeout(() => {
+                            pointer.classList.remove("abaixar");
+                        }, 2000); // 2 segundos
+                    }
+                } else {
+                    pointer.classList.remove("abaixar");
+                }
+            }
+
+            // Função para ativar animação de abaixar o ponteiro
+            function startPointerAnimation() {
+                document.getElementById("pointer").classList.add("abaixar");
+            }
+
+            // Controlando a rotação com o clique no botão
+            $('.btn-spin').on("click", function () {
+                $(this).prop('disabled', true);
+                startPointerAnimation();
+                spinWheel();
+            });
+        });
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const spinDuration = 12000;  // Tempo de rotação aumentado para desacelerar mais
+            const spinSpeed = Math.PI * 6; // A velocidade de rotação, ainda boa para o efeito
+            const targetAngle = currentAngle + spinSpeed + Math.random() * Math.PI * 2;
+
+            let startTime = null;
+
+            function animateSpin(time) {
+                if (!startTime) startTime = time;
+                const elapsedTime = time - startTime;
+                const progress = Math.min(elapsedTime / spinDuration, 1); // Garantir que não ultrapasse 1 (100%)
+
+                // Aplicando uma aceleração/desaceleração suave com easeOutQuad
+                const easedProgress = easeOutQuad(progress);
+
+                // Atualizando o ângulo de rotação com a progressão suavizada
+                currentAngle = currentAngle + easedProgress * (targetAngle - currentAngle);
+
+                drawWheel(currentAngle); // Desenha a roleta com o novo ângulo
+                checkPointerPosition(currentAngle); // Verificar posição do ponteiro
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    currentAngle = targetAngle; // Garantir que o ângulo final seja exatamente o esperado
+                    drawWheel(currentAngle);
+                    checkPointerPosition(currentAngle); // Atualiza a posição do ponteiro
+                    isSpinning = false;
+                    $('.btn-spin').prop('disabled', false);
+                }
+            }
+
+            // Função de desaceleração suave
+            function easeOutQuad(t) {
+                return t * (2 - t); // Efeito de desaceleração suave
+            }
+
+            requestAnimationFrame(animateSpin);
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const spinDuration = 12000;  // Tempo de rotação aumentado para desacelerar mais
+            const spinSpeed = Math.PI * 6; // A velocidade de rotação, ainda boa para o efeito
+            const targetAngle = currentAngle + spinSpeed + Math.random() * Math.PI * 2;
+
+            let startTime = null;
+
+            function animateSpin(time) {
+                if (!startTime) startTime = time;
+                const elapsedTime = time - startTime;
+                const progress = Math.min(elapsedTime / spinDuration, 1); // Garantir que não ultrapasse 1 (100%)
+
+                // Aplicando uma aceleração/desaceleração suave com easeOutQuad
+                const easedProgress = easeOutQuad(progress);
+
+                // Atualizando o ângulo de rotação com a progressão suavizada
+                currentAngle = currentAngle + easedProgress * (targetAngle - currentAngle);
+
+                drawWheel(currentAngle); // Desenha a roleta com o novo ângulo
+                checkPointerPosition(currentAngle); // Verificar posição do ponteiro
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    currentAngle = targetAngle; // Garantir que o ângulo final seja exatamente o esperado
+                    drawWheel(currentAngle);
+                    checkPointerPosition(currentAngle); // Atualiza a posição do ponteiro
+                    isSpinning = false;
+                    $('.btn-spin').prop('disabled', false);
+                }
+            }
+
+            // Função de desaceleração suave
+            function easeOutQuad(t) {
+                return t * (2 - t); // Efeito de desaceleração suave
+            }
+
+            requestAnimationFrame(animateSpin);
+        }
+        // Animação de luzes para um efeito visual
+        function animOdds() {
+            $(".lights:even").toggleClass("lit");
+            $(".lights:odd").toggleClass("lit");
+        }
+
+        // Alterna a animação de luzes a cada 700ms
+        setInterval(animOdds, 700);
+    </script>
+    <script>
+        // Função para criar luzes caindo dinamicamente
+        function createFallingLights() {
+            const body = document.querySelector('body');
+
+            // Criar um número de luzes caindo
+            for (let i = 0; i < 100; i++) {
+                const light = document.createElement('div');
+                light.classList.add('light');
+                // Ajustar a posição horizontal para cada luz
+                light.style.left = Math.random() * 100 + 'vw';
+                light.style.animationDuration = (Math.random() * 2 + 2) + 's';  // Variar a duração da animação
+                body.appendChild(light);
+            }
+        }
+
+        // Criar as luzes ao carregar a página
+        window.onload = createFallingLights;
+    </script>
+</body>
+
+</html>
